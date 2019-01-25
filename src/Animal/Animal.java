@@ -9,4 +9,7 @@ public abstract class Animal {
     protected int sex;
     protected boolean mature;
 
+    public String getName() {
+        return name;
+    }
 }

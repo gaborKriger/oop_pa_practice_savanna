@@ -14,4 +14,6 @@ public class Predator extends Animal {
         super.sex = randomNumberBeetwen(1,2);
         super.mature = false;
     }
+
+
 }

@@ -2,6 +2,8 @@ package Savanna;
 
 import Animal.Predator;
 
+import static Util.MyRandom.randomNumberBeetwen;
+
 public class Savanna {
 
     private int day;
@@ -22,6 +24,15 @@ public class Savanna {
 
     public void addPredator() {
         Predator predator = new Predator();
+        while (true) {
+            int row = randomNumberBeetwen(0,savanna.length);
+            int col = randomNumberBeetwen(0,savanna[0].length);
+            if (savanna[row][col].isEmpty()) {
+                savanna[row][col].setAnimal(predator);
+                break;
+            }
+        }
+
     }
 
     public void life() {
