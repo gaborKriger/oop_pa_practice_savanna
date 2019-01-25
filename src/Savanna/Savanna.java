@@ -19,7 +19,7 @@ public class Savanna {
         savanna = new Field[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                savanna[i][j] = new Field(true, randomNumberBeetwen(0, 5), column, row);
+                savanna[i][j] = new Field(true, randomNumberBeetwen(0, 5), j, i);
             }
         }
     }
@@ -53,9 +53,9 @@ public class Savanna {
     private void multiply() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
-                Field ActualField = savanna[i][j];
-                Animal actualAnimal = ActualField.getAnimal();
-                if (!(ActualField).isEmpty() && actualAnimal.isMature()) {
+                Field actualField = savanna[i][j];
+                Animal actualAnimal = actualField.getAnimal();
+                if (!(actualField).isEmpty() && actualAnimal.isMature()) {
                     for (int k = -1; k <= 1; k++) {
                         for (int l = -1; l <= 1; l++) {
                             boolean inSavanna = i + k >= 0 && i + k < savanna.length &&
@@ -68,7 +68,12 @@ public class Savanna {
                                     if (neighboreAnimal.isMature() &&
                                             actualAnimal instanceof Herbivorous &&
                                             neighboreAnimal instanceof Herbivorous) {
-                                        System.out.println("Növényevők dugtak!!");
+
+                                        Field newBornField = isEmptyFieldAround(actualField);
+                                        if (newBornField != null) {
+                                            newBornField.setAnimal(new Herbivorous());
+
+                                        }
                                     }
                                 }
                             }
@@ -164,13 +169,23 @@ public class Savanna {
         }
     }
 
-    public Field isEmptyFieldAround(Field field){
-        for (int i = -1; i <= 1 ; i++) {
-            for (int j = -1; j <= 1; j++) {
+    public Field isEmptyFieldAround(Field field) {
+        int i = field.getyCoordinate();
+        int j = field.getxCoordinate();
+        System.out.println("i: "+i + " j: " + j);
+        for (int k = -1; k <= 1; k++) {
+            for (int l = -1; l <= 1; l++) {
+                boolean inSavanna = i + k >= 0 && i + k < savanna.length &&
+                        j + l >= 0 && j + l < savanna[j].length;
+                if (inSavanna) {
+                    Field checkedField = savanna[field.getxCoordinate() + j][field.getyCoordinate() + i];
+                    if (checkedField.isEmpty()) {
+                        return checkedField;
+                    }
+                }
             }
-
         }
-        return field;
+        return null;
     }
 
     public void printAnimals() {
