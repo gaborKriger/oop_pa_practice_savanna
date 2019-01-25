@@ -9,7 +9,7 @@ class App {
         Savanna savanna = new Savanna();
         savanna.addField(5,5);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
 //            savanna.addAnimal(new Predator());
             savanna.addAnimal(new Herbivorous());
         }

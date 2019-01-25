@@ -56,8 +56,8 @@ public class Savanna {
                 Field ActualField = savanna[i][j];
                 Animal actualAnimal = ActualField.getAnimal();
                 if (!(ActualField).isEmpty() && actualAnimal.isMature()) {
-                    for (int k = -1; k < 1; k++) {
-                        for (int l = -1; l < 1; l++) {
+                    for (int k = -1; k <= 1; k++) {
+                        for (int l = -1; l <= 1; l++) {
                             boolean inSavanna = i + k >= 0 && i + k < savanna.length &&
                                     j + l >= 0 && j + l < savanna[i].length;
                             if (inSavanna) {
@@ -95,8 +95,8 @@ public class Savanna {
                 if (savanna[i][j].getAnimal() instanceof Herbivorous) {
                     if (savanna[i][j].getGrass() < 1) {
                         boolean stepIsPossible = false;
-                        for (int k = -1; k < 1; k++) {
-                            for (int l = -1; l < 1; l++) {
+                        for (int k = -1; k <= 1; k++) {
+                            for (int l = -1; l <= 1; l++) {
                                 if (i + k >= 0 && i + k < savanna.length &&
                                         j + l >= 0 && j + l < savanna[i].length) {
                                     if (savanna[i + k][j + l].isEmpty()) {
@@ -162,6 +162,15 @@ public class Savanna {
                 }
             }
         }
+    }
+
+    public Field isEmptyFieldAround(Field field){
+        for (int i = -1; i <= 1 ; i++) {
+            for (int j = -1; j <= 1; j++) {
+            }
+
+        }
+        return field;
     }
 
     public void printAnimals() {
