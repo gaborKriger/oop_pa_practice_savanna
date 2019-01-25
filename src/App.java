@@ -14,7 +14,7 @@ class App {
             savanna.addAnimal(new Herbivorous());
         }
 
-        int years = 2;
+        int years = 40;
 
         for (int i = 0; i < years * 365; i++) {
             savanna.life();

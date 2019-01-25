@@ -52,7 +52,20 @@ public class Savanna {
             for (int j = 0; j < savanna[i].length; j++) {
                 if (savanna[i][j].getAnimal() instanceof Herbivorous) {
                     if (savanna[i][j].getGrass() < 1) {
-                        moveOneField(i, j);
+                        boolean stepIsPossible = false;
+                        for (int k = -1; k < 1; k++) {
+                            for (int l = -1; l < 1; l++) {
+                                if (i + k >= 0 && i + k < savanna.length &&
+                                    j + l >= 0 && j + l < savanna[i].length) {
+                                    if (savanna[i+k][j+l].isEmpty()) {
+                                        stepIsPossible = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (stepIsPossible) {
+                            moveOneField(i, j);
+                        }
                     } else {
                         ((Herbivorous) savanna[i][j].getAnimal()).eat(savanna[i][j]);
                     }
@@ -75,7 +88,7 @@ public class Savanna {
                     toField.setEmpty(false);
                     toField.setAnimal(fromField.getAnimal());
                     fromField.setAnimal(null);
-                    if(toField.getGrass()>=1){
+                    if (toField.getGrass() >= 1) {
                         ((Herbivorous) toField.getAnimal()).eat(toField);
                     }
                     break;
@@ -87,7 +100,7 @@ public class Savanna {
     private void growGrass() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
-                savanna[i][j].changeGrass(0.25);
+                savanna[i][j].changeGrass(0.5);
             }
         }
     }
@@ -116,7 +129,7 @@ public class Savanna {
                 if (!actualField.isEmpty()) {
                     System.out.print(i + " " + j + ": ");
                     System.out.print(actualField.getAnimal().getName());
-                    System.out.println(" starving: " +actualField.getAnimal().getStarving());
+                    System.out.println(" starving: " + actualField.getAnimal().getStarving());
                     System.out.println("grass: " + actualField.getGrass());
                 }
             }
