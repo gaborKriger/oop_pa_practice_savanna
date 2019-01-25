@@ -2,7 +2,6 @@ package Savanna;
 
 import Animal.Animal;
 import Animal.Herbivorous;
-import Animal.Predator;
 
 import static Util.MyRandom.randomNumberBeetwen;
 
@@ -11,9 +10,6 @@ public class Savanna {
     private int day;
     private Field[][] savanna;
 
-    public int getDay() {
-        return day;
-    }
 
     public void addField(int row, int column) {
         savanna = new Field[row][column];
@@ -40,7 +36,7 @@ public class Savanna {
     public void life() {
         this.day++;
         System.out.println("\nDays: " + day + "\n");
-        increaseStarving();
+        setStarvingUp();
         growGrass();
         feedHerbivorous();
         increaseAge();
@@ -152,7 +148,7 @@ public class Savanna {
         }
     }
 
-    private void increaseStarving() {
+    private void setStarvingUp() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
                 if (!savanna[i][j].isEmpty()) {
@@ -196,7 +192,7 @@ public class Savanna {
                     System.out.print(actualField.getAnimal().getName());
                     System.out.println(" starving: " + actualField.getAnimal().getStarving());
                     System.out.println("grass: " + actualField.getGrass());
-                }
+               }
             }
         }
     }
