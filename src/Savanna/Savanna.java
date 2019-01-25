@@ -44,22 +44,36 @@ public class Savanna {
         growGrass();
         feedHerbivorous();
         increaseAge();
+        multiply();
+
+        printAnimals();
+
+    }
+
+    private void multiply() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
                 if (!savanna[i][j].isEmpty()) {
-                    boolean paired = false;
                     int originalAnimalSex = savanna[i][j].getAnimal().getSex();
                     for (int k = -1; k < 1; k++) {
                         for (int l = -1; l < 1; l++) {
                             if (i + k >= 0 && i + k < savanna.length &&
-                                    j + l >= 0 && j + l < savanna[i].length) {
+                                    j + l >= 0 && j + l < savanna[i].length &&
+                                        !savanna[i+k][j+l].isEmpty()) {
                                 if (originalAnimalSex != savanna[i+k][j+l].getAnimal().getSex()) {
-                                    if (savanna[i][j].getAnimal() instanceof Herbivorous){
-                                        addAnimal(new Herbivorous());
-                                    } else {
-                                        addAnimal(new Predator());
+                                    if (savanna[i][j].getAnimal() instanceof Herbivorous &&
+                                        savanna[i+k][j+l].getAnimal() instanceof Herbivorous &&
+                                            savanna[i][j].getAnimal().isMature() &&
+                                            savanna[i+k][j+l].getAnimal().isMature()){
+                                        System.out.println("Növényevők dugtak!!");
                                     }
 
+                                    if (savanna[i][j].getAnimal() instanceof Predator &&
+                                        savanna[i+k][j+l].getAnimal() instanceof Predator &&
+                                            savanna[i][j].getAnimal().isMature() &&
+                                            savanna[i+k][j+l].getAnimal().isMature()) {
+                                        System.out.println("Húsevők dugtak!!");
+                                    }
                                 }
                             }
                         }
@@ -67,9 +81,6 @@ public class Savanna {
                 }
             }
         }
-
-        printAnimals();
-
     }
 
     private void increaseAge() {
