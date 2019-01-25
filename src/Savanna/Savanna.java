@@ -39,6 +39,8 @@ public class Savanna {
         setStarvingUp();
         growGrass();
         feedHerbivorous();
+
+
         increaseAge();
         multiply();
 
@@ -68,7 +70,7 @@ public class Savanna {
                                         Field newBornField = isEmptyFieldAround(actualField);
                                         if (newBornField != null) {
                                             newBornField.setAnimal(new Herbivorous());
-
+                                            newBornField.setEmpty(false);
                                         }
                                     }
                                 }
@@ -151,14 +153,15 @@ public class Savanna {
     private void setStarvingUp() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
-                if (!savanna[i][j].isEmpty()) {
-                    Animal animal = savanna[i][j].getAnimal();
+                Field actualField = savanna[i][j];
+                if (!actualField.isEmpty()) {
+                    Animal animal = actualField.getAnimal();
                     animal.increaseStarving();
                     // kill animal
                     if (animal.getStarving() == 10) {
                         animal.setAlive(false);
-                        savanna[i][j].setAnimal(null);
-                        savanna[i][j].setEmpty(true);
+                        actualField.setAnimal(null);
+                        actualField.setEmpty(true);
                     }
                 }
             }
@@ -184,16 +187,25 @@ public class Savanna {
     }
 
     public void printAnimals() {
+        int numberOfHerbivorous = 0;
+        int numberOfPredators = 0;
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
                 Field actualField = savanna[i][j];
                 if (!actualField.isEmpty()) {
-                    System.out.print(i + " " + j + ": ");
-                    System.out.print(actualField.getAnimal().getName());
-                    System.out.println(" starving: " + actualField.getAnimal().getStarving());
-                    System.out.println("grass: " + actualField.getGrass());
-               }
+                    if (actualField.getAnimal() instanceof Herbivorous) {
+                        numberOfHerbivorous++;
+                    } else {
+                        numberOfPredators++;
+                    }
+//                    System.out.print(i + " " + j + ": ");
+//                    System.out.print(actualField.getAnimal().getName());
+//                    System.out.println(" starving: " + actualField.getAnimal().getStarving());
+//                    System.out.println("grass: " + actualField.getGrass());
+                }
             }
         }
+        System.out.println("After " + day / 365 + " year(s) the number of Herbivorous: " +
+                numberOfHerbivorous + " and Predators: " + numberOfPredators);
     }
 }
