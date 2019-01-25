@@ -21,6 +21,14 @@ public class Field extends Savanna {
         return empty;
     }
 
+    public void setEmpty(boolean empty) {
+        this.empty = empty;
+    }
+
+    public Animal getAnimal() {
+        return animal;
+    }
+
     public void setAnimal(Animal animal) {
         this.animal = animal;
     }
