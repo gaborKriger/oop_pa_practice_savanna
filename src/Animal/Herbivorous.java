@@ -4,6 +4,7 @@ import Savanna.Field;
 
 import static Util.MyRandom.randomNumberBeetwen;
 
+
 public class Herbivorous extends Animal {
 
     private static int nameID;
@@ -23,5 +24,11 @@ public class Herbivorous extends Animal {
             field.changeGrass(-1);
             this.starving -= 1;
         }
+    }
+
+    public void moveHerbivorous(){
+
+
+
     }
 }

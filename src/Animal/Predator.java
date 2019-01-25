@@ -15,6 +15,4 @@ public class Predator extends Animal {
         super.mature = false;
         super.alive = true;
     }
-
-
 }

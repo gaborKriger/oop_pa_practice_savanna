@@ -34,7 +34,12 @@ public class Field extends Savanna {
     }
 
     public void changeGrass(double amount) {
-        this.grass += amount;
+        if(amount>0 && this.grass<10) {
+            this.grass += amount;
+        }
+        if(amount<0 && this.grass>0){
+            this.grass +=amount;
+        }
     }
 
     public double getGrass() {

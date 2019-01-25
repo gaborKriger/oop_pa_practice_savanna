@@ -32,4 +32,5 @@ public abstract class Animal {
     public void increaseStarving() {
         this.starving ++;
     }
+
 }
