@@ -172,13 +172,12 @@ public class Savanna {
     public Field isEmptyFieldAround(Field field) {
         int i = field.getyCoordinate();
         int j = field.getxCoordinate();
-        System.out.println("i: "+i + " j: " + j);
         for (int k = -1; k <= 1; k++) {
             for (int l = -1; l <= 1; l++) {
                 boolean inSavanna = i + k >= 0 && i + k < savanna.length &&
                         j + l >= 0 && j + l < savanna[j].length;
                 if (inSavanna) {
-                    Field checkedField = savanna[field.getxCoordinate() + j][field.getyCoordinate() + i];
+                    Field checkedField = savanna[i + k][j + l];
                     if (checkedField.isEmpty()) {
                         return checkedField;
                     }

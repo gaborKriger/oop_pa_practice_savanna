@@ -45,4 +45,20 @@ public class Field extends Savanna {
     public double getGrass() {
         return grass;
     }
+
+    public int getxCoordinate() {
+        return xCoordinate;
+    }
+
+    public int getyCoordinate() {
+        return yCoordinate;
+    }
+
+    public void setxCoordinate(int xCoordinate) {
+        this.xCoordinate = xCoordinate;
+    }
+
+    public void setyCoordinate(int yCoordinate) {
+        this.yCoordinate = yCoordinate;
+    }
 }

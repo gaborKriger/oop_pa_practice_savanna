@@ -7,7 +7,7 @@ class App {
     public static void main(String[] args) {
 
         Savanna savanna = new Savanna();
-        savanna.addField(5,5);
+        savanna.addField(10,10);
 
         for (int i = 0; i < 10; i++) {
 //            savanna.addAnimal(new Predator());
