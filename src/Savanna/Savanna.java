@@ -1,6 +1,6 @@
 package Savanna;
 
-import Animal.Predator;
+import Animal.Animal;
 
 import static Util.MyRandom.randomNumberBeetwen;
 
@@ -22,13 +22,12 @@ public class Savanna {
         }
     }
 
-    public void addPredator() {
-        Predator predator = new Predator();
+    public void addAnimal(Animal animal) {
         while (true) {
             int row = randomNumberBeetwen(0,(savanna.length-1));
             int col = randomNumberBeetwen(0,(savanna[0].length-1));
             if (savanna[row][col].isEmpty()) {
-                savanna[row][col].setAnimal(predator);
+                savanna[row][col].setAnimal(animal);
                 savanna[row][col].setEmpty(false);
                 break;
             }

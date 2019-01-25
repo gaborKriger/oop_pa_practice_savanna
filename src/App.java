@@ -1,3 +1,5 @@
+import Animal.Herbivorous;
+import Animal.Predator;
 import Savanna.Savanna;
 
 class App {
@@ -14,7 +16,8 @@ class App {
         }
 
         for (int i = 0; i < 5; i++) {
-            savanna.addPredator();
+            savanna.addAnimal(new Predator());
+            savanna.addAnimal(new Herbivorous());
         }
 
         savanna.printPredator();
