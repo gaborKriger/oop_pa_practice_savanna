@@ -18,10 +18,7 @@ public class Predator extends Animal {
         super.alive = true;
     }
 
-    public void eat(Field field) {
-        if (this.starving > 0 && field.getGrass() >= 1) {
-            field.changeGrass(-1);
-            this.starving -= 1;
-        }
+    public void feedPredator(int number){
+            this.starving -= number;
     }
 }

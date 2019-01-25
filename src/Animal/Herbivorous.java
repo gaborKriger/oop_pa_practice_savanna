@@ -25,10 +25,4 @@ public class Herbivorous extends Animal {
             this.starving -= 1;
         }
     }
-
-    public void moveHerbivorous(){
-
-
-
-    }
 }

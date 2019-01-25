@@ -2,6 +2,7 @@ package Savanna;
 
 import Animal.Animal;
 import Animal.Herbivorous;
+import Animal.Predator;
 
 import static Util.MyRandom.randomNumberBeetwen;
 
@@ -40,12 +41,46 @@ public class Savanna {
         growGrass();
         feedHerbivorous();
 
+        moveAndFeedPredator();
 
         increaseAge();
         multiply();
 
         printAnimals();
 
+    }
+
+    private void moveAndFeedPredator() {
+        for (int i = 0; i < savanna.length; i++) {
+            for (int j = 0; j < savanna[i].length; j++) {
+                boolean predatorMoved = false;
+                Field actualField = savanna[i][j];
+                if (actualField.getAnimal() instanceof Predator) {
+                    for (int k = -1; k <= 1; k++) {
+                        for (int l = -1; l <= 1; l++)
+                            if (i + k >= 0 && i + k < savanna.length &&
+                                    j + l >= 0 && j + l < savanna[i].length) {
+                                Field neighborField = savanna[i + k][j + l];
+                                if (!neighborField.isEmpty() && neighborField.getAnimal() instanceof Herbivorous) {
+                                    neighborField.getAnimal().setAlive(false);
+                                    System.out.println(neighborField.getAnimal().getName() + "HAS EATEN");
+                                    ((Predator) actualField.getAnimal()).feedPredator(1);
+                                    neighborField.setAnimal(actualField.getAnimal());
+                                    actualField.setEmpty(true);
+                                    actualField.setAnimal(null);
+                                    actualField.setEmpty(true);
+                                    predatorMoved = true;
+                                    break;
+                                }
+                            }
+                    }
+                    if (!predatorMoved) {
+                        moveOneField(i, j);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private void multiply() {
@@ -61,16 +96,15 @@ public class Savanna {
                             if (inSavanna) {
                                 Field neighboreField = savanna[i + k][j + l];
                                 Animal neighboreAnimal = neighboreField.getAnimal();
-                                if (!neighboreField.isEmpty() &&
-                                        actualAnimal.getSex() != neighboreAnimal.getSex()) {
-                                    if (neighboreAnimal.isMature() &&
-                                            actualAnimal instanceof Herbivorous &&
-                                            neighboreAnimal instanceof Herbivorous) {
-
-                                        Field newBornField = isEmptyFieldAround(actualField);
-                                        if (newBornField != null) {
-                                            newBornField.setAnimal(new Herbivorous());
-                                            newBornField.setEmpty(false);
+                                if (!neighboreField.isEmpty() && actualAnimal.getSex() != neighboreAnimal.getSex()) {
+                                    if (neighboreAnimal.isMature()) {
+                                        if (actualAnimal instanceof Herbivorous &&
+                                                neighboreAnimal instanceof Herbivorous) {
+                                            getNewborn(actualField, new Herbivorous());
+                                        }
+                                        if (actualAnimal instanceof Predator &&
+                                                neighboreAnimal instanceof Predator) {
+                                            getNewborn(actualField, new Predator());
                                         }
                                     }
                                 }
@@ -79,6 +113,15 @@ public class Savanna {
                     }
                 }
             }
+        }
+    }
+
+    private void getNewborn(Field actualField, Animal animal) {
+        Field newBornField = isEmptyFieldAround(actualField);
+        if (newBornField != null) {
+            newBornField.setAnimal(animal);
+            newBornField.setEmpty(false);
+            System.out.println(newBornField.getAnimal().getName() + "IS NEWBORN!");
         }
     }
 
@@ -133,7 +176,7 @@ public class Savanna {
                     toField.setEmpty(false);
                     toField.setAnimal(fromField.getAnimal());
                     fromField.setAnimal(null);
-                    if (toField.getGrass() >= 1) {
+                    if (toField.getGrass() >= 1 && toField.getAnimal() instanceof Herbivorous) {
                         ((Herbivorous) toField.getAnimal()).eat(toField);
                     }
                     break;
@@ -158,7 +201,14 @@ public class Savanna {
                     Animal animal = actualField.getAnimal();
                     animal.increaseStarving();
                     // kill animal
-                    if (animal.getStarving() == 10) {
+                    if(animal instanceof Predator && animal.getStarving() == 30){
+                        System.out.println(animal.getName() + " KILLED");
+                        animal.setAlive(false);
+                        actualField.setAnimal(null);
+                        actualField.setEmpty(true);
+                    }
+                    if (animal instanceof Herbivorous && animal.getStarving() == 10) {
+                        System.out.println(animal.getName() + " KILLED");
                         animal.setAlive(false);
                         actualField.setAnimal(null);
                         actualField.setEmpty(true);
@@ -186,6 +236,24 @@ public class Savanna {
         return null;
     }
 
+    public Field isHerbivorousAround(Field field) {
+        int i = field.getyCoordinate();
+        int j = field.getxCoordinate();
+        for (int k = -1; k <= 1; k++) {
+            for (int l = -1; l <= 1; l++) {
+                boolean inSavanna = i + k >= 0 && i + k < savanna.length &&
+                        j + l >= 0 && j + l < savanna[j].length;
+                if (inSavanna) {
+                    Field checkedField = savanna[i + k][j + l];
+                    if (!checkedField.isEmpty() && checkedField.getAnimal() instanceof Herbivorous) {
+                        return checkedField;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public void printAnimals() {
         int numberOfHerbivorous = 0;
         int numberOfPredators = 0;
@@ -201,7 +269,6 @@ public class Savanna {
 //                    System.out.print(i + " " + j + ": ");
 //                    System.out.print(actualField.getAnimal().getName());
 //                    System.out.println(" starving: " + actualField.getAnimal().getStarving());
-//                    System.out.println("grass: " + actualField.getGrass());
                 }
             }
         }

@@ -16,7 +16,7 @@ public abstract class Animal {
         return name;
     }
 
-    public void setCoordinate(int x, int y){
+    public void setCoordinate(int x, int y) {
         this.xCoordinate = x;
         this.yCoordinate = y;
     }
@@ -30,7 +30,7 @@ public abstract class Animal {
     }
 
     public void increaseStarving() {
-        this.starving ++;
+        this.starving++;
     }
 
     public int getSex() {
