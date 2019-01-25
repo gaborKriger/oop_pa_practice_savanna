@@ -6,13 +6,13 @@ class App {
 
     public static void main(String[] args) {
 
-        int sizeOfSavanna = 100;
-        int years = 10;
+        int sizeOfSavanna = 40;
+        int years = 2;
 
         Savanna savanna = new Savanna();
         savanna.addField(sizeOfSavanna, sizeOfSavanna);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20; i++) {
             savanna.addAnimal(new Predator());
             savanna.addAnimal(new Herbivorous());
         }
