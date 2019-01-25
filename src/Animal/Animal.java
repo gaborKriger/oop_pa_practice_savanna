@@ -33,4 +33,18 @@ public abstract class Animal {
         this.starving ++;
     }
 
+    public int getSex() {
+        return sex;
+    }
+
+    public boolean isMature() {
+        return mature;
+    }
+
+    public void setAge() {
+        this.age++;
+        if (age > 365) {
+            this.mature = true;
+        }
+    }
 }

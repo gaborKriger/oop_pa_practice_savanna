@@ -40,11 +40,46 @@ public class Savanna {
     public void life() {
         this.day++;
         System.out.println("\nDays: " + day + "\n");
-        incraseStarving();
+        increaseStarving();
         growGrass();
         feedHerbivorous();
+        increaseAge();
+        for (int i = 0; i < savanna.length; i++) {
+            for (int j = 0; j < savanna[i].length; j++) {
+                if (!savanna[i][j].isEmpty()) {
+                    boolean paired = false;
+                    int originalAnimalSex = savanna[i][j].getAnimal().getSex();
+                    for (int k = -1; k < 1; k++) {
+                        for (int l = -1; l < 1; l++) {
+                            if (i + k >= 0 && i + k < savanna.length &&
+                                    j + l >= 0 && j + l < savanna[i].length) {
+                                if (originalAnimalSex != savanna[i+k][j+l].getAnimal().getSex()) {
+                                    if (savanna[i][j].getAnimal() instanceof Herbivorous){
+                                        addAnimal(new Herbivorous());
+                                    } else {
+                                        addAnimal(new Predator());
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         printAnimals();
 
+    }
+
+    private void increaseAge() {
+        for (int i = 0; i < savanna.length; i++) {
+            for (int j = 0; j < savanna[i].length; j++) {
+                if (!savanna[i][j].isEmpty()) {
+                    savanna[i][j].getAnimal().setAge();
+                }
+            }
+        }
     }
 
     private void feedHerbivorous() {
@@ -56,8 +91,8 @@ public class Savanna {
                         for (int k = -1; k < 1; k++) {
                             for (int l = -1; l < 1; l++) {
                                 if (i + k >= 0 && i + k < savanna.length &&
-                                    j + l >= 0 && j + l < savanna[i].length) {
-                                    if (savanna[i+k][j+l].isEmpty()) {
+                                        j + l >= 0 && j + l < savanna[i].length) {
+                                    if (savanna[i + k][j + l].isEmpty()) {
                                         stepIsPossible = true;
                                     }
                                 }
@@ -105,7 +140,7 @@ public class Savanna {
         }
     }
 
-    private void incraseStarving() {
+    private void increaseStarving() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
                 if (!savanna[i][j].isEmpty()) {
