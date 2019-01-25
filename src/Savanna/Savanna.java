@@ -17,7 +17,7 @@ public class Savanna {
         savanna = new Field[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                savanna[i][j] = new Field(true,1, row, column);
+                savanna[i][j] = new Field(true,1,column, row);
             }
         }
     }
@@ -28,6 +28,7 @@ public class Savanna {
             int col = randomNumberBeetwen(0,(savanna[0].length-1));
             if (savanna[row][col].isEmpty()) {
                 savanna[row][col].setAnimal(animal);
+                animal.setCoordinate(col,row);
                 savanna[row][col].setEmpty(false);
                 break;
             }
