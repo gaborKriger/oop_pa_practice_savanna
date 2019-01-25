@@ -53,26 +53,22 @@ public class Savanna {
     private void multiply() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
-                if (!savanna[i][j].isEmpty()) {
-                    int originalAnimalSex = savanna[i][j].getAnimal().getSex();
+                Field ActualField = savanna[i][j];
+                Animal actualAnimal = ActualField.getAnimal();
+                if (!(ActualField).isEmpty() && actualAnimal.isMature()) {
                     for (int k = -1; k < 1; k++) {
                         for (int l = -1; l < 1; l++) {
-                            if (i + k >= 0 && i + k < savanna.length &&
-                                    j + l >= 0 && j + l < savanna[i].length &&
-                                        !savanna[i+k][j+l].isEmpty()) {
-                                if (originalAnimalSex != savanna[i+k][j+l].getAnimal().getSex()) {
-                                    if (savanna[i][j].getAnimal() instanceof Herbivorous &&
-                                        savanna[i+k][j+l].getAnimal() instanceof Herbivorous &&
-                                            savanna[i][j].getAnimal().isMature() &&
-                                            savanna[i+k][j+l].getAnimal().isMature()){
+                            boolean inSavanna = i + k >= 0 && i + k < savanna.length &&
+                                    j + l >= 0 && j + l < savanna[i].length;
+                            if (inSavanna) {
+                                Field neighboreField = savanna[i + k][j + l];
+                                Animal neighboreAnimal = neighboreField.getAnimal();
+                                if (!neighboreField.isEmpty() &&
+                                        actualAnimal.getSex() != neighboreAnimal.getSex()) {
+                                    if (neighboreAnimal.isMature() &&
+                                            actualAnimal instanceof Herbivorous &&
+                                            neighboreAnimal instanceof Herbivorous) {
                                         System.out.println("Növényevők dugtak!!");
-                                    }
-
-                                    if (savanna[i][j].getAnimal() instanceof Predator &&
-                                        savanna[i+k][j+l].getAnimal() instanceof Predator &&
-                                            savanna[i][j].getAnimal().isMature() &&
-                                            savanna[i+k][j+l].getAnimal().isMature()) {
-                                        System.out.println("Húsevők dugtak!!");
                                     }
                                 }
                             }
