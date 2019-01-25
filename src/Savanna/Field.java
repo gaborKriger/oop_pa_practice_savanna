@@ -6,7 +6,7 @@ public class Field extends Savanna {
 
     private boolean empty;
     private Animal animal;
-    private int grass;
+    private double grass;
     private int xCoordinate;
     private int yCoordinate;
 
@@ -31,5 +31,13 @@ public class Field extends Savanna {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
+    }
+
+    public void changeGrass(double amount) {
+        this.grass += amount;
+    }
+
+    public double getGrass() {
+        return grass;
     }
 }

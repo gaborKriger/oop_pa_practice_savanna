@@ -1,6 +1,8 @@
 package Savanna;
 
 import Animal.Animal;
+import Animal.Herbivorous;
+import Animal.Predator;
 
 import static Util.MyRandom.randomNumberBeetwen;
 
@@ -36,15 +38,53 @@ public class Savanna {
     }
 
     public void life() {
-        this.day += 1;
+        this.day ++;
+        System.out.println("\nDays: " + day + "\n");
+        incraseStarving();
+        growGrass();
+        for (int i = 0; i < savanna.length; i++) {
+            for (int j = 0; j < savanna[i].length; j++) {
+                if (savanna[i][j].getAnimal() instanceof Herbivorous) {
+                    ((Herbivorous) savanna[i][j].getAnimal()).eat(savanna[i][j]);
+                }
+            }
+        }
+        printAnimals();
+
     }
 
-    public void printPredator() {
+    private void growGrass() {
+        for (int i = 0; i < savanna.length; i++) {
+            for (int j = 0; j < savanna[i].length; j++) {
+                savanna[i][j].changeGrass(0.5);
+            }
+        }
+    }
+
+    private void incraseStarving() {
+        for (int i = 0; i < savanna.length; i++) {
+            for (int j = 0; j < savanna[i].length; j++) {
+                if (!savanna[i][j].isEmpty()) {
+                    Animal animal = savanna[i][j].getAnimal();
+                    animal.increaseStarving();
+                    // kill animal
+                    if (animal.getStarving() == 10) {
+                        animal.setAlive(false);
+                        savanna[i][j].setAnimal(null);
+                        savanna[i][j].setEmpty(true);
+                    }
+                }
+            }
+        }
+    }
+
+    public void printAnimals() {
         for (int i = 0; i < savanna.length; i++) {
             for (int j = 0; j < savanna[i].length; j++) {
                 if (!savanna[i][j].isEmpty()) {
                     System.out.print(i + " " + j + ": ");
-                    System.out.println(savanna[i][j].getAnimal().getName());
+                    System.out.print(savanna[i][j].getAnimal().getName());
+                    System.out.println(" starving: " + savanna[i][j].getAnimal().getStarving());
                 }
             }
         }

@@ -5,11 +5,12 @@ public abstract class Animal {
     protected String name;
     protected int age;
     protected int maxAge;
-    protected boolean starving;
+    protected int starving;
     protected int sex;
     protected boolean mature;
     protected int xCoordinate;
     protected int yCoordinate;
+    protected boolean alive;
 
     public String getName() {
         return name;
@@ -18,5 +19,17 @@ public abstract class Animal {
     public void setCoordinate(int x, int y){
         this.xCoordinate = x;
         this.yCoordinate = y;
+    }
+
+    public int getStarving() {
+        return starving;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    public void increaseStarving() {
+        this.starving ++;
     }
 }
